@@ -13,13 +13,19 @@ const getters = {
 const actions = {
   addItemToStandards ({ state, commit }, standard) {
         commit('addItemToStandards', { standard })
-    }
+  },
+  removeItemFromStandards ({ state, commit }, standard) {
+        commit('removeItemFromStandards', { standard })
+    },
 }
 
 // mutations
 const mutations = {
     addItemToStandards (state, { standard }) {
         state.items.push(standard)
+    },
+    removeItemFromStandards (state, { standard }) {
+        state.items = state.items.filter(s => s.code != standard.code)
     }
 }
 

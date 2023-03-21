@@ -1,13 +1,13 @@
 <template>
-     <div class="space-y-5 px-6">
+     <div class="px-6 space-y-5">
         <div class="relative flex items-start" v-for="(standard, index) in standards" :key="index">
-            <div class="flex h-6 items-center">
+            <div class="flex items-center h-6">
                 <input
                     :id="index"
                     name="comments"
                     type="checkbox"
-                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    @change="addStandard(standard)"
+                    class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-600"
+                    @change="addStandard($event, standard)"
                 />
             </div>
             <div class="ml-3 text-sm leading-6">
@@ -22,8 +22,11 @@
     export default {
         props: ['standards'],
         methods: {
-            addStandard (standard) {
-                this.$store.dispatch('standards/addItemToStandards', standard)
+            addStandard (event, standard) {
+                if(event.target.checked)
+                    this.$store.dispatch('standards/addItemToStandards', standard)
+                else
+                    this.$store.dispatch('standards/removeItemFromStandards', standard)
             }
         }
     }
