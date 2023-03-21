@@ -17,6 +17,9 @@ const actions = {
   removeItemFromStandards ({ state, commit }, standard) {
         commit('removeItemFromStandards', { standard })
     },
+  clearAll ({ state, commit }) {
+        commit('clearAll')
+    },
 }
 
 // mutations
@@ -26,6 +29,9 @@ const mutations = {
     },
     removeItemFromStandards (state, { standard }) {
         state.items = state.items.filter(s => s.code != standard.code)
+    },
+    clearAll (state) {
+        state.items = [];
     }
 }
 

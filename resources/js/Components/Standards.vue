@@ -4,6 +4,8 @@
             <div class="flex items-center h-6">
                 <input
                     :id="index"
+                    :value="standard.code"
+                    v-model="selectedStandardsCodes"
                     name="comments"
                     type="checkbox"
                     class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-600"
@@ -21,6 +23,17 @@
 <script>
     export default {
         props: ['standards'],
+        data() {
+            return {
+                selectedStandardsCodes: []
+            };
+        },
+        mounted() {
+            this.$store.subscribeAction((action, state) => {
+                if(action.type === 'standards/clearAll')
+                    this.selectedStandardsCodes = [];
+            });
+        },
         methods: {
             addStandard (event, standard) {
                 if(event.target.checked)
