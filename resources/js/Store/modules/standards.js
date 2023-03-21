@@ -6,11 +6,19 @@ const state = () => ({
 const getters = {
   cartProducts: (state) => {
     return state.items;
-  }
+  },
+  selectedStandardsCodes: state => state.items.map(s => s.code),
 }
 
 // actions
 const actions = {
+  toggleStandard ({ state, commit, getters }, standard) {
+    if(getters.selectedStandardsCodes.indexOf(standard.code) == -1)
+      commit('addItemToStandards', { standard })
+    else
+      commit('removeItemFromStandards', { standard })
+
+  },
   addItemToStandards ({ state, commit }, standard) {
         commit('addItemToStandards', { standard })
   },

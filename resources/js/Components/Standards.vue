@@ -6,10 +6,10 @@
                     :id="index"
                     :value="standard.code"
                     v-model="selectedStandardsCodes"
+                    @click="toggleStandard($event, standard)"
                     name="comments"
                     type="checkbox"
-                    class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-600"
-                    @change="addStandard($event, standard)"
+                    class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-600"  
                 />
             </div>
             <div class="ml-3 text-sm leading-6">
@@ -21,29 +21,18 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
+
     export default {
         props: ['standards'],
-        data() {
-            return {
-                selectedStandardsCodes: []
-            };
-        },
-        mounted() {
-            this.$store.subscribeAction((action, state) => {
-                if (action.type === 'standards/clearAll')
-                    this.selectedStandardsCodes = [];
-                
-                if (action.type === 'standards/removeItemFromStandards')
-                    this.selectedStandardsCodes = this.selectedStandardsCodes.filter(s => s.code != action.payload.code);
-
-            });
+        computed: {
+            ...mapGetters({
+                selectedStandardsCodes: 'standards/selectedStandardsCodes',
+            }),
         },
         methods: {
-            addStandard (event, standard) {
-                if(event.target.checked)
-                    this.$store.dispatch('standards/addItemToStandards', standard)
-                else
-                    this.$store.dispatch('standards/removeItemFromStandards', standard)
+            toggleStandard (event, standard) {
+                this.$store.dispatch('standards/toggleStandard', standard)
             }
         }
     }
