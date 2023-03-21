@@ -30,8 +30,12 @@
         },
         mounted() {
             this.$store.subscribeAction((action, state) => {
-                if(action.type === 'standards/clearAll')
+                if (action.type === 'standards/clearAll')
                     this.selectedStandardsCodes = [];
+                
+                if (action.type === 'standards/removeItemFromStandards')
+                    this.selectedStandardsCodes = this.selectedStandardsCodes.filter(s => s.code != action.payload.code);
+
             });
         },
         methods: {
